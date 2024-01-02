@@ -1,0 +1,2 @@
+## Solana NFT minting bot
+

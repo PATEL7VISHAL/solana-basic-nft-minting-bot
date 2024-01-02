@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index",
-  "type": "module",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx tsc && node ./",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "compile": "npx tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@metaplex-foundation/js": "^0.19.4",
+    "@metaplex-foundation/mpl-token-metadata": "2.13.0",
     "@project-serum/anchor": "^0.26.0",
     "@solana/spl-token": "^0.3.8"
   },

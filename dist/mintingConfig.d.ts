@@ -1,7 +1,7 @@
 export declare const mintingConfig: {
     isMain: boolean;
     collectionId: string;
-    payer: number[];
+    payer: string;
     nftReceiver: string;
     nftName: string;
     nftSymbol: string;

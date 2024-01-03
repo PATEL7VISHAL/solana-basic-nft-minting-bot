@@ -8,7 +8,6 @@ import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 const log = console.log;
 const rpcUrl = mintingConfig.isMain ? mintingConfig.rpcUrlMain : mintingConfig.rpcUrlDev
 const connection = new web3.Connection(rpcUrl)
-const baseSpl = new BaseSpl(connection)
 let baseMpl: BaseMpl;
 
 async function main() {
@@ -37,7 +36,7 @@ async function main() {
   const uri = mintingConfig.nftUri
 
   //NOTE: Minting  a NFT
-  const createUsdcRes = await baseMpl.__createToken({
+  const mintNftRes = await baseMpl.__createToken({
     mintTokens: false,
     name,
     symbol,
@@ -45,7 +44,7 @@ async function main() {
     sellerFeeBasisPoints: 0,
     tokenStandard: TokenStandard.NonFungible,
   }, { mintKeypair: tokenKp, mintAmount: 1, receiver, decimal: 0 })
-  log({ createUsdcRes })
+  log({ mintNftRes })
 }
 
 

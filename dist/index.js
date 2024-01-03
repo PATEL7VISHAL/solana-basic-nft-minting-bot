@@ -39,17 +39,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var anchor_1 = require("@project-serum/anchor");
 var mpl_token_metadata_1 = require("@metaplex-foundation/mpl-token-metadata");
 var baseMpl_1 = require("./base/baseMpl");
-var baseSpl_1 = require("./base/baseSpl");
 var mintingConfig_1 = require("./mintingConfig");
 var bytes_1 = require("@project-serum/anchor/dist/cjs/utils/bytes");
 var log = console.log;
 var rpcUrl = mintingConfig_1.mintingConfig.isMain ? mintingConfig_1.mintingConfig.rpcUrlMain : mintingConfig_1.mintingConfig.rpcUrlDev;
 var connection = new anchor_1.web3.Connection(rpcUrl);
-var baseSpl = new baseSpl_1.BaseSpl(connection);
 var baseMpl;
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var payerKp, _payerKey, receiver, _wallet, provider, tokenKp, token, name, symbol, uri, createUsdcRes;
+        var payerKp, _payerKey, receiver, _wallet, provider, tokenKp, token, name, symbol, uri, mintNftRes;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -83,8 +81,8 @@ function main() {
                             tokenStandard: mpl_token_metadata_1.TokenStandard.NonFungible,
                         }, { mintKeypair: tokenKp, mintAmount: 1, receiver: receiver, decimal: 0 })];
                 case 1:
-                    createUsdcRes = _a.sent();
-                    log({ createUsdcRes: createUsdcRes });
+                    mintNftRes = _a.sent();
+                    log({ mintNftRes: mintNftRes });
                     return [2 /*return*/];
             }
         });

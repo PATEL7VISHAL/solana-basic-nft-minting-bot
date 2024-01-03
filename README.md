@@ -1,14 +1,13 @@
 ## Solana NFT minting bot
 
 ### Prerequisite
-- Newer version of [Nodejs] (https://nodejs.org/en) (v18.0+)
+- Newer version of [Nodejs](https://nodejs.org/en) (v18.0+)
 
-### Init Some depency for node package Commands
+### Init Some dependency for node package Commands
 ```cmd
 npm init
 ```
 
-<----------
 * NFT Metadata can be modifying by updating the `./src/mintingConfig.ts` file
 
 

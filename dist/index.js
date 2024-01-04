@@ -45,30 +45,31 @@ var log = console.log;
 var rpcUrl = mintingConfig_1.mintingConfig.isMain ? mintingConfig_1.mintingConfig.rpcUrlMain : mintingConfig_1.mintingConfig.rpcUrlDev;
 var connection = new anchor_1.web3.Connection(rpcUrl);
 var baseMpl;
-function main() {
+var payerKp = null;
+var _payerKey = mintingConfig_1.mintingConfig.payer;
+if (!_payerKey)
+    throw "Payer key not found";
+if (typeof _payerKey == 'string')
+    payerKp = anchor_1.web3.Keypair.fromSecretKey(Uint8Array.from(bytes_1.bs58.decode(_payerKey)));
+else
+    payerKp = anchor_1.web3.Keypair.fromSecretKey(Uint8Array.from(_payerKey));
+log("nftOwner: ", payerKp.publicKey.toBase58());
+log("\n");
+function mint() {
     return __awaiter(this, void 0, void 0, function () {
-        var payerKp, _payerKey, receiver, _wallet, provider, tokenKp, token, name, symbol, uri, mintNftRes;
+        var receiver, _wallet, provider, tokenKp, token, name, symbol, uri, mintNftRes;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    payerKp = null;
-                    _payerKey = mintingConfig_1.mintingConfig.payer;
-                    if (!_payerKey)
-                        throw "Payer key not found";
-                    if (typeof _payerKey == 'string')
-                        payerKp = anchor_1.web3.Keypair.fromSecretKey(Uint8Array.from(bytes_1.bs58.decode(_payerKey)));
-                    else
-                        payerKp = anchor_1.web3.Keypair.fromSecretKey(Uint8Array.from(_payerKey));
                     if (!payerKp)
                         throw "Unable to parse payer key";
-                    log({ payer: payerKp.publicKey.toBase58() });
                     receiver = mintingConfig_1.mintingConfig.nftReceiver ? new anchor_1.web3.PublicKey(mintingConfig_1.mintingConfig.nftReceiver) : payerKp.publicKey;
                     _wallet = new anchor_1.Wallet(payerKp);
                     provider = new anchor_1.AnchorProvider(connection, _wallet, {});
                     baseMpl = new baseMpl_1.BaseMpl(provider.wallet, { endpoint: connection.rpcEndpoint });
                     tokenKp = anchor_1.web3.Keypair.generate();
                     token = tokenKp.publicKey;
-                    log({ token: token.toBase58() });
+                    log("nftId: ", token.toBase58());
                     name = mintingConfig_1.mintingConfig.nftName;
                     symbol = mintingConfig_1.mintingConfig.nftSymbol;
                     uri = mintingConfig_1.mintingConfig.nftUri;
@@ -82,13 +83,37 @@ function main() {
                         }, { mintKeypair: tokenKp, mintAmount: 1, receiver: receiver, decimal: 0 })];
                 case 1:
                     mintNftRes = _a.sent();
-                    log({ mintNftRes: mintNftRes });
+                    log("mintNftTxSign : ", mintNftRes);
                     return [2 /*return*/];
             }
         });
     });
 }
-main().then(function (_) {
+function runner() {
+    return __awaiter(this, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!true) return [3 /*break*/, 2];
+                    return [4 /*yield*/, mint().then(function (_) {
+                            log("\n");
+                            return true;
+                        }).catch(function (error) {
+                            log({ error: error });
+                            return false;
+                        })];
+                case 1:
+                    res = _a.sent();
+                    if (!res)
+                        return [3 /*break*/, 2];
+                    return [3 /*break*/, 0];
+                case 2: return [2 /*return*/];
+            }
+        });
+    });
+}
+runner().then(function (_) {
     log("Success");
 }).catch(function (error) {
     log({ error: error });

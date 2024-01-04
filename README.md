@@ -17,5 +17,4 @@ npm run build
 npm run start
 
 ```
-
 - Above cmd will mint an nft on devnet and same info nft mint by `npm run start` cmd
